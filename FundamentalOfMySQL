@@ -1,0 +1,112 @@
+-- USE sql_store;
+
+-- SELECT *
+-- FROM customers
+-- -- WHERE customer_id > 3
+-- -- ORDER BY first_name desc  //susun secara terbalik
+-- ORDER BY customer_id desc  
+
+-- SELECT 
+-- 	last_name, 
+--     first_name, 
+--     points, 
+--     points + 100 AS before_discount,
+--     points - 300 AS 'after discount'
+-- FROM customers
+-- ORDER BY points desc
+
+//////////////////////////////////////////
+
+1.  WHERE
+
+USE sql_store;
+
+SELECT * 
+FROM customers
+WHERE birth_date > '1990-01-01' OR state = 'IL'
+
+1.1 EXERCISE
+
+-- get the order placed this year
+
+SELECT * 
+FROM orders
+WHERE order_date >= '2019-01-01'
+
+///////////////////////////////////////////
+
+2. THE AND, OR and NOT Operator
+
+SELECT * 
+FROM customers
+-- WHERE birth_date >= '1990-01-01' OR points > 1000 AND points > 3000
+-- WHERE birth_date >= '1990-01-01' OR (points > 1000 AND points > 3000)
+WHERE NOT birth_date >= '1990-01-01' OR points > 3000
+
+2.1 EXERCISE 
+
+-- From the order_item table, get the items
+-- for order #6
+-- where the total price is granter than 30
+
+SELECT *
+FROM order_items
+WHERE order_id = 6 AND unit_price * quantity > 30
+
+///////////////////////////////////////////////////
+
+3. THE IN OPERATOR
+
+SELECT *
+FROM customers
+-- WHERE state = 'MA' OR state = 'VA' OR state = 'CO' //cara 1
+-- WHERE state IN ('MA', 'VA', 'CO') //cara 2
+WHERE state NOT IN ('MA', 'VA', 'CO') 
+
+3.1 EXERCISE
+
+-- Return product with 
+-- quantity in stock equal to 49, 38, 72
+
+SELECT *
+FROM products
+WHERE quantity_in_stock IN (49, 38, 72)
+
+///////////////////////////////////////////////////////
+
+4. THE BETWEEN OPERATOR
+
+SELECT *
+FROM customers
+-- WHERE points >= 1000 AND points <= 3000 cara 1
+WHERE points BETWEEN 1000 AND 3000
+
+4.1 EXERCISE 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
