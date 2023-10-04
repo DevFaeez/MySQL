@@ -83,7 +83,162 @@ WHERE points BETWEEN 1000 AND 3000
 
 4.1 EXERCISE 
 
+-- return customer born
+-- between 1/1/1990 and 1/1/2000
 
+SELECT *
+FROM customers
+WHERE birth_date BETWEEN '1990-01-01' AND '2000-01-01'
+
+
+
+
+//////////////////////////////////////////////////////
+
+5. THE LIKE OPERATOR
+
+// % sign to indicate any number of character you may have
+// _ menunjukan bahawa bebas char apa pun sebelum suatu char, satu _ mewakili 1 char sahaja
+
+5.1 using %
+
+SELECT *
+FROM customers
+-- WHERE last_name LIKE 'B%'
+-- WHERE last_name LIKE '%field'
+WHERE last_name LIKE '%field%'
+
+5.2 using _
+
+SELECT *
+FROM customers
+-- WHERE last_name LIKE '_____y'
+WHERE last_name LIKE 'B____y'
+
+5.3 EXERCISE
+
+-- get the customers whose 
+-- address contain TRAIL or AVENUE
+-- phone number end with 9
+
+SELECT *
+FROM customers
+-- WHERE address LIKE '%TRAIL%' OR '%AVENUE%'
+-- WHERE phone LIKE '%9'
+WHERE phone NOT LIKE '%9'
+
+///////////////////////////////////////////////////
+
+6. THE REGEXP OPERATOR
+
+SELECT *
+FROM customers
+-- WHERE last_name REGEXP 'field'
+-- WHERE last_name REGEXP '^field' -- //^ the data must start with field
+-- WHERE last_name REGEXP 'field$' -- // $ the data must end with field
+-- WHERE last_name REGEXP 'field|mac' -- // | seperti keyword or
+-- WHERE last_name REGEXP 'field$|mac'
+-- WHERE last_name REGEXP '[gim]e' -- [ ] sebelum huruf ye perlu huruf dalam petak, contoh ge , ie, me
+-- WHERE last_name REGEXP 'e[fmq]' -- [ ] selepas huruf yg perlu huruf dalam petak, contoh ef, em, eq
+WHERE last_name REGEXP 'e[a-b]' -- [a-c], hruf dalam [ ] adalah dari a sampai c 
+
+6.1 EXERCISE
+
+-- Get the customer whose
+-- first names are ELKA or AMBUR
+-- last name end with EY or ON
+-- last names Start with MY or contains SE
+-- last names contain B followd by R or uninstall
+
+SELECT *
+FROM customers
+-- WHERE first_name REGEXP '^ELKA|^AMBUR'
+-- WHERE first_name REGEXP 'EY$|ON$'
+-- WHERE first_name REGEXP '^my|se'
+-- WHERE first_name REGEXP 'B[RU]' -- cara 1
+WHERE first_name REGEXP 'BR|BU' -- cara 2
+
+//////////////////////////////////////////////////////
+
+7. THE NULL IS OPERATOR
+
+* untuk cari data null
+
+SELECT *
+FROM customers
+-- WHERE phone IS NULL
+WHERE phone IS NOT NULL
+
+7.1 EXERCISE
+
+-- GEt the orders that are not shipped
+
+SELECT *
+FROM orders
+WHERE shipped_date IS NULL AND shipper_id IS NULL
+
+////////////////////////////////////////////////////
+
+8.  THE ORDER BY CLAUSE
+
+ SELECT *
+ FROM customers
+ -- ORDER BY first_name
+ -- ORDER BY first_name DESC
+ -- ORDER BY state, first_name
+ ORDER BY state DESC, first_name DESC
+
+8.1 
+
+ SELECT first_name, last_name
+ FROM customers
+ ORDER BY birth_date
+
+8.2 
+
+ SELECT first_name, last_name, 100 AS point
+ FROM customers
+ ORDER BY 1, 2 -- 1 stans for first_name, 2 stand for last_name
+
+ 8.3 EXERCISE
+
+SELECT *, quantity * unit_price AS total_price
+FROM order_items
+WHERE order_id = 2
+ORDER BY quantity * unit_price DESC
+
+//atau
+
+
+SELECT *, quantity * unit_price AS total_price
+FROM order_items
+WHERE order_id = 2
+ORDER BY total_price DESC
+
+/////////////////////////////////////////////////////////
+
+10. THE LIMIT OPERATOR
+
+* limit bilangan data yang ingin diambil
+* wajib hadir pada penghujung
+
+SELECT *
+FROM customers
+-- LIMIT 3  -- ambik 3 data pertama
+LIMIT 6, 3 -- skip 6 data pertama dan ambik 3 data selepas itu
+
+10.1 EXERCISE
+
+-- Get the top 3 loyal customer
+
+SELECT *
+FROM customers
+ORDER BY points DESC
+LIMIT 3 
+
+////////////////////////////////////////////////////////////
+
+11. INNER JOINS
 
 
 
