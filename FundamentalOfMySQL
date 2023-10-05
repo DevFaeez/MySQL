@@ -240,6 +240,137 @@ LIMIT 3
 
 11. INNER JOINS
 
+* connect a few database table
+* using JOIN or INNER JOIN
+
+SELECT order_id, first_name, last_name, orders.customer_id  
+-- disebabkan customer_id ada apda kedua-dua table, maka kita perlu pilih dengan menggunakan customer.customer_id atau orders.customer_id
+FROM orders
+  JOIN customers 
+  ON orders.customer_id = customers.customer_id
+
+11.1 
+
+SELECT order_id, first_name, last_name, o.customer_id  
+-- disebabkan customer_id ada apda kedua-dua table, maka kita perlu pilih dengan menggunakan customer.customer_id atau orders.customer_id
+FROM orders o  -- huruf o selepas order adalah bermaksud alias kepada order
+  JOIN customers c -- huruf c selepas customer adalah bermaksud alias kepada customers
+  ON o.customer_id = c.customer_id
+
+11.2 EXERCISE
+
+SELECT *
+FROM order_items ot
+JOIN products p
+ON ot.product_id = p.product_id
+
+///////////////////////////////////////////////////////////////
+
+12. JOINING ACROSS DATABASE
+
+USE sql_inventory;
+
+SELECT *
+FROM sql_store.orders_items oi
+JOIN products p
+ON oi.product_id = p.product_id
+
+////////////////////////////////////////////////////////////
+
+13. SELF JOIN
+
+USE sql_hr;
+
+SELECT 
+	e.employee_id,
+	e.first_name,
+	m.first_name AS manager
+FROM employees e
+JOIN employees m
+	ON e.reports_to = m.employee_id
+
+////////////////////////////////////////////////////////////
+
+14. JOINING MULTI TABLE
+
+USE sql_store;
+
+SELECT 
+	o.order_id,
+    o.order_date,
+    c.first_name,
+    c.last_name,
+    os.name AS status
+FROM orders o
+JOIN customers c
+	ON o.customer_id = c.customer_id
+JOIN order_statuses os
+	ON o.status = os.order_status_id
+
+14.1 EXCERSIE
+
+-- in sql_invoicing, connect the client with payment
+-- a;so connect payment with payment method
+USE sql_invoicing;
+
+SELECT 
+	p.client_id,
+    p.amount,
+    c.name,
+    pm.name AS payment_method
+FROM payments p
+JOIN clients c
+	ON p.client_id = c.client_id
+JOIN payment_methods pm
+	ON p.payment_method = pm.payment_method_id
+
+
+//////////////////////////////////////////////////////////////////////////////
+
+15. COUMPOUND JOIN CONDITIONS
+
+USE sql_store;
+
+SELECT *
+FROM order_items oi
+JOIN order_item_notes oin
+	ON oi.order_id = oin.order_id
+    AND oi.product_id = oin.product_id
+
+
+//////////////////////////////////////////////////////////////////////////////
+
+16. IMPLICIT JOIN SYNTAX
+
+//////////////////////////////////////////////////////////////////////////////
+
+17. OUTER JOINS
+
+* INNER JOIN / JOIN
+* OUTER JOIN
+ - LEFT JOIN
+ - RIGHT JOIN
+
+ SELECT 
+	c.customer_id,
+	c.first_name,
+	o.order_id
+ FROM orders o
+ RIGHT JOIN customers c
+	ON c.customer_id = o.customer_id
+ ORDER BY c.customer_id
+
+17.1 
+
+ SELECT 
+	c.customer_id,
+	c.first_name,
+	o.order_id
+ FROM orders o
+ LEFT JOIN customers c
+	ON c.customer_id = o.customer_id
+ ORDER BY c.customer_id
+
 
 
 
