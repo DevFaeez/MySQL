@@ -527,9 +527,108 @@ SELECT
 FROM customers -- boleh union walai beza table
 WHERE order_date < "2019-01-01"
 
+23.2 EXERCISE
+
+
+SELECT customer_id, first_name, points, "BROWSE" AS ranking
+FROM customers
+WHERE points <= 2000
+UNION
+SELECT customer_id, first_name, points, "SILVER" AS ranking
+FROM customers
+WHERE points BETWEEN 2000 AND  3000
+UNION
+SELECT customer_id, first_name, points, "GOLD" AS ranking
+FROM customers
+WHERE points >= 3000
+
 ////////////////////////////////////////////////////////
 
-24. 
+24. COLUMN ATTRIBUTES
+
+////////////////////////////////////////////////////////
+
+25. INSERTING A SINGLE ROW
+
+--basic insert data
+INSERT INTO customers
+VALUE (
+	DEFAULT,
+    'fais',
+    'nasir',
+    '2000-11-11',
+    NULL,
+    'lubuk kim',
+    'bandar hilir',
+    'KL',
+    default
+    )
+
+25.1 pilih specific collumn sahaja
+
+INSERT INTO customers (
+	first_name,
+    last_name,
+    birth_date,
+    address,
+    city,
+    state)
+VALUE (
+    'nik',
+    'kimm',
+    '2000-11-11',
+    'johor lama',
+    'bandar baru',
+    'KL'
+    )
+
+/////////////////////////////////////////////////////////////////
+
+26. INSERTING MULTI ROW
+
+INSERT INTO shippers (name)
+VALUE ('shipper1'),
+	  ('shipper2'),
+	  ('shipper3')
+
+
+/////////////////////////////////////////////////////////////////
+
+27. INSERTING HIERARCAL ROWS
+
+INSERT INTO orders (customer_id, order_date, status)
+VALUES (1, '2019-01-02', 1);
+
+INSERT INTO order_items
+VALUES 
+	(LAST_INSERT_ID(), 1, 1, 2.95),
+	(LAST_INSERT_ID(), 2, 1, 3.95)
+
+//////////////////////////////////////////////////////////////////////
+
+28. CREATING A COPY OF TABLE
+
+////////////////////////////////////////////////////////////
+
+29. UPDATING A SINGLE ROW
+
+UPDATE invoices
+SET payment_total = 10, payment_date = '2019-03-01'
+-- SET payment_total = DEFAULT, payment_date = NULL
+WHERE invoice_id = 1
+
+////////////////////////////////////////////////////////////
+
+30. UPDATING MULTi ROW
+
+UPDATE invoices
+SET payment_total = 10, payment_date = '2019-03-01'
+-- SET payment_total = DEFAULT, payment_date = NULL
+WHERE invoice_id IN (3, 4)
+
+    
+    
+
 
 
 
