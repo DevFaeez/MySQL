@@ -371,6 +371,168 @@ JOIN order_item_notes oin
 	ON c.customer_id = o.customer_id
  ORDER BY c.customer_id
 
+///////////////////////////////////////////////////////////////
+
+18. OUTER JOIN BETWEEN MULTI TABLE
+
+USE sql_store;
+
+SELECT
+	c.customer_id,
+    c.first_name,
+    o.order_id,
+    sh.name AS shipper
+FROM customers c
+LEFT JOIN  orders o
+	ON c.customer_id = o.customer_id
+LEFT JOIN shippers sh
+	ON o.shipper_id = sh.shipper_id
+ORDER BY c.customer_id
+
+
+//////////////////////////////////////////////////////////////
+
+19. SELF OUTHER JOIN
+
+USE sql_hr;
+
+SELECT 
+	e.employee_id,
+    e.first_name,
+    m.first_name AS manager
+FROM employess e
+LEFT JOIN employees m 
+	ON e.reports_to = m.employee_id
+
+///////////////////////////////////////////////////////////
+
+20. THE USING CLAUSE
+
+* guna untuk link dengan nama field yg sama 
+* contoh: o.customer_id = c.customer_id 
+* boleh disimplify dengan USING(customer_id)
+
+USE sql_store;
+
+SELECT 
+	o.order_id,
+    c.first_name,
+    sh.name AS shipper
+FROM orders o
+JOIN customers c
+	USING (customer_id)
+JOIN shippers sh 
+	USING (shipper_id)
+
+20.1 
+
+SELECT *
+FROM order_items oi
+JOIN order_item_notes oin
+-- 	ON oi.order_id = oin.order_id 
+--     AND oi.product_id = oin.product_id
+
+	USING (order_id, product_id)
+
+20.2 EXERCISE
+
+USE sql_invoicing;
+
+SELECT 
+	p.date,
+    c.name,
+    p.amount,
+    pm.name
+FROM clients c
+JOIN payments p
+	USING (client_id)
+JOIN payment_methods pm
+	ON p.payment_method = pm.payment_method_id
+
+/////////////////////////////////////////////////////////////
+
+21. NATURAL JOIN
+
+* link 2 table berdasarkan perkra yang sama, dilkukan secara auto oleh mySQL
+
+SELECT 
+	o.order_id,
+    c.first_name
+FROM orders o
+NATURAL JOIN customers c
+
+//////////////////////////////////////////////////////////////
+
+22. CROSS JOIN
+
+SELECT 
+    o.order_id,
+    c.first_name
+FROM orders o
+CROSS JOIN customers c
+
+22.1 EXERCISE
+
+-- Do a cross join between shippers and products
+-- using the implicit syantax
+
+SELECT 
+	sh.name AS shipper,
+	p.name AS product
+FROM shippers sh, products p
+ORDER BY sh.name
+
+-- using the explicit syntax
+
+SELECT 
+	sh.name AS shipper,
+	p.name AS product
+FROM shippers sh
+CROSS JOIN products p
+ORDER BY sh.name
+
+///////////////////////////////////////////////////////
+
+23. UNIONS
+
+ * combine a few query
+
+SELECT 
+    order_id,
+    order_date,
+    "active" AS status
+FROM orders
+WHERE order_date >= "2019-01-01"
+UNION 
+SELECT 
+    order_id,
+    order_date,
+    "passive" AS status
+FROM orders
+WHERE order_date < "2019-01-01"
+
+23.1
+
+SELECT 
+	order_id,
+    order_date,
+    "active" AS status
+FROM orders
+WHERE order_date >= "2019-01-01"
+UNION 
+SELECT 
+	order_id,
+    order_date,
+    "passive" AS status
+FROM customers -- boleh union walai beza table
+WHERE order_date < "2019-01-01"
+
+////////////////////////////////////////////////////////
+
+24. 
+
+
+
 
 
 
