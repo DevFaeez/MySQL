@@ -619,12 +619,67 @@ WHERE invoice_id = 1
 
 ////////////////////////////////////////////////////////////
 
-30. UPDATING MULTi ROW
+30. UPDATING MULTI ROW
 
 UPDATE invoices
 SET payment_total = 10, payment_date = '2019-03-01'
 -- SET payment_total = DEFAULT, payment_date = NULL
 WHERE invoice_id IN (3, 4)
+
+30.1 EXERCISE
+
+-- write a SQl statement to
+-- give any customer born before 1990
+-- 50 extra points
+
+UPDATE customers
+SET points = points + 50
+WHERE birth_date < '1990-01-01'
+
+////////////////////////////////////////////////////////////
+
+31. USING SUBQUERIES IN UPDATES
+
+* a subqueary is a select statement that is within another SQL
+
+UPDATE invoices
+SET 
+	payment_total = invoice_total - 100,
+	payment_date = due_date
+WHERE client_id = 
+			(SELECT client_id
+            FROM clients
+            WHERE name = 'Vinte')
+
+31.1 
+
+UPDATE invoices
+SET 
+	payment_total = invoice_total - 100,
+	payment_date = due_date
+WHERE client_id IN 
+	    (SELECT client_id
+            FROM clients
+            WHERE state IN ('NY', 'WV'))
+
+////////////////////////////////////////////
+
+32. DELETING ROW
+
+DELETE FROM invoices
+WHERE client_id = (
+	SELECT client_id
+	FROM clients
+	WHERE name = "Myworks" 
+	)
+
+
+
+///////////////////////////////////////////////////////
+
+33. RESTORING COURSE DATABASE
+
+
 
     
     
